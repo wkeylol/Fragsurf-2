@@ -1,0 +1,30 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Discord;
+
+public class DiscordController : MonoBehaviour
+{
+    public Discord.Discord discord;
+
+    void Start()
+    {
+        discord = new Discord.Discord(858536449191313409, (System.UI64)discord.CreateFlags.Default);
+        var activityManager = discord.GetActivityManager();
+        var activity = new Discord.Activity {
+            Details = "Currently playing Bunny hop",
+            State = "Bhop_stanlovesacer"
+        };
+        activityManager.UpdateActivity(activity, (res) => {
+            if (res == Discord.Result.Ok)
+                Debug.Log("Discord Status Set");
+            else
+                Debug.LogError("Discord Status Failed");
+        });
+    }
+
+    void Update()
+    {
+        discord.RunCallbacks();
+    }
+}
